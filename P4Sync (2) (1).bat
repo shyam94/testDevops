@@ -1,0 +1,23 @@
+p4 tag -l GoogleAnalyticsODBC_TestingLabelForAzDo //Drivers/Memphis/Tools/...@Memphis_Core_ODBC_1.6.34.1039
+p4 tag -l GoogleAnalyticsODBC_TestingLabelForAzDo //Drivers/DriverShared/DriverSupport/Maintenance/10.1/...@Memphis_Core_ODBC_1.6.34.1039
+p4 tag -l GoogleAnalyticsODBC_TestingLabelForAzDo //Drivers/DriverShared/SENPluginToolkit/Maintenance/10.1/...@Memphis_Core_ODBC_1.6.34.1039
+p4 tag -l GoogleAnalyticsODBC_TestingLabelForAzDo //Drivers/DriverShared/ViewSupport/Maintenance/10.1/...@Memphis_Core_ODBC_1.6.34.1039
+p4 tag -l GoogleAnalyticsODBC_TestingLabelForAzDo //Drivers/DriverShared/Docs/External/...#head
+p4 tag -l GoogleAnalyticsODBC_TestingLabelForAzDo //SimbaShared/Licensing/Maintenance/1.0/...@Memphis_Core_ODBC_1.6.34.1039
+p4 tag -l GoogleAnalyticsODBC_TestingLabelForAzDo //SimbaShared/Step/Maintenance/...@Memphis_Core_ODBC_1.6.34.1039
+p4 tag -l GoogleAnalyticsODBC_TestingLabelForAzDo //SimbaShared/Tools/Maintenance/...@Memphis_Core_ODBC_1.6.34.1039
+p4 tag -l GoogleAnalyticsODBC_TestingLabelForAzDo //SimbaShared/ImportDependencies/Maintenance/1.0/...#head
+p4 tag -l GoogleAnalyticsODBC_TestingLabelForAzDo //ThirdParty/Expat/2.2.9/...@Memphis_Core_ODBC_1.6.34.1039
+p4 tag -l GoogleAnalyticsODBC_TestingLabelForAzDo //ThirdParty/icu/58.3.x/...@Memphis_Core_ODBC_1.6.34.1039
+p4 tag -l GoogleAnalyticsODBC_TestingLabelForAzDo //ThirdParty/libcURL/7.66.0_ssl1.1.1_zlib-static1.2.11_threaded_resolver/...@Memphis_Core_ODBC_1.6.34.1039
+p4 tag -l GoogleAnalyticsODBC_TestingLabelForAzDo //ThirdParty/openssl/1.1.1/...@Memphis_Core_ODBC_1.6.34.1039
+p4 tag -l GoogleAnalyticsODBC_TestingLabelForAzDo //ThirdParty/poco/1.9.0/...@Memphis_Core_ODBC_1.6.34.1039
+p4 tag -l GoogleAnalyticsODBC_TestingLabelForAzDo //ThirdParty/pugixml/1.7/...@Memphis_Core_ODBC_1.6.34.1039
+p4 tag -l GoogleAnalyticsODBC_TestingLabelForAzDo //ThirdParty/rapidjson/20160518/...@Memphis_Core_ODBC_1.6.34.1039
+p4 tag -l GoogleAnalyticsODBC_TestingLabelForAzDo //ThirdParty/liboauthcpp/1.0/...@Memphis_Core_ODBC_1.6.34.1039
+p4 tag -l GoogleAnalyticsODBC_TestingLabelForAzDo //ThirdParty/zlib/1.2.11/...@Memphis_Core_ODBC_1.6.34.1039
+p4 tag -l GoogleAnalyticsODBC_TestingLabelForAzDo //ThirdParty/gtest/1.7/...@Memphis_Core_ODBC_1.6.34.1039
+p4 tag -l GoogleAnalyticsODBC_TestingLabelForAzDo //Drivers/Memphis/Core/Maintenance/1.6/...@Memphis_Core_ODBC_1.6.34.1039
+p4 tag -l GoogleAnalyticsODBC_TestingLabelForAzDo //Drivers/Memphis/DataSources/S3/ODBC/Maintenance/1.6/...#head
+p4 tag -l GoogleAnalyticsODBC_TestingLabelForAzDo //Drivers/Memphis/DataSources/S3/Common/Maintenance/1.6/...#head
+pause

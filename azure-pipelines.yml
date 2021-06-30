@@ -13,7 +13,7 @@ steps:
 
 - script: |
     python -m pip install beautifulSoup4
-    flake8 .
+    
   displayName: 'Installing BeautifulSoup4'
 
 - script: python scrape.py

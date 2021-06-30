@@ -7,16 +7,13 @@ trigger:
 - main
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: vs2017-win2016
 
 steps:
-- task: BatchScript@1
-  inputs:
-    filename: 'C:\Users\pcheemakurthi\Documents\Batch Files\sampleBatch.bat'
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
 
 - script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+    python -m pip install beautifulSoup4
+    flake8 .
+  displayName: 'Installing BeautifulSoup4'
+
+- script: python scrape.py

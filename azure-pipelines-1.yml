@@ -14,6 +14,10 @@ steps:
   displayName: 'Run a one-line script'
 
 - script: |
+    python -m pip install jira
+    
+  displayName: 'Installing jira'
+- script: |
     python test.py $(username) $(password) $(DriverName) $(Summary) $(ReleaseVersion) $(Platforms) $(Customers)
     echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+  displayName: 'Create CONMAP script'

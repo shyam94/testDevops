@@ -62,8 +62,8 @@ class JiraOperations:
     def createConmapTask(self,driverName,summary,releaseVersion,platforms,customers):
         issue_values={'project':{'id': self.conmapProjectId}, 'summary':summary,'issuetype': {'id' : '10902' },'parent': {'id': self.parentIds[driverName]}, 'customfield_11008': releaseVersion}
         
-        #print(platforms[1])
-        #print(customers)
+        print(platforms[1])
+        print(customers)
         customerArray=list()
         for customer in customers:
             print(customer)

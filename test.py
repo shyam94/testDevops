@@ -78,9 +78,9 @@ class JiraOperations:
             tempDict["id"]=self.allPlatforms[platform]
             customerPlatforms.append(tempDict) 
         issue_values["customfield_11003"]=customerPlatforms
-            
-        jira=self.connect(issue_values)
-        return jira.create_issue(fields=issue_values)
+        print(issue_values) 
+        #jira=self.connect(issue_values)
+        #return jira.create_issue(fields=issue_values)
         
     
     def connect(self,issue_values):

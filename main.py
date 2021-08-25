@@ -169,9 +169,12 @@ def main():
               "needs prior to running this.")
         input_json_file = input("Please enter the full path to the input json "
                                 "file (e.g., C:\\user_input.json): ")
+    print("In line 172")
     f = open(input_json_file)
+    print("In line 174")
     run_bamboo_adapter_build(load(f))
-    print(plan_results(self.project, self.get_plan_key))
+    print("In line 176")
+    #print(plan_results(self.project, self.get_plan_key))
     #data = urllib.request.urlopen("http://bergamot3.lakes.ad:8085/browse/TSTFOMEM-WIN2012R26432M104-21/artifact/JOB/Logs/build.txt")  # it's a file like object and works just like a file
     #path = data.readlines()[1].strip().decode('utf-8')
     #print(path.replace('oak','oak.simba.ad'))

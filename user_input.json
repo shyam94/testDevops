@@ -1,0 +1,156 @@
+{
+    "inCommon": {
+        "inP4Root": "C:\\Users\\shubhams\\PerforceDevelopment",
+        "inP4Host": "ssrivastava",
+        "inP4Port": "10.54.1.6:1666",
+        "inP4User": "ssrivastava",
+        "inP4Client": "SSrivastava_SSrivastava1_5000",
+        "inNewPluginName": "Zoom",
+        "inNewPluginOutputDir": "C:\\Users\\shubhams\\Documents\\Automation\\DriverAutomationSuite\\1.0\\"
+    },
+    "inPluginGenerator": {
+        "inTemplateDir": "C:\\Users\\FOO\\",
+        "inTemplateName": "PluginT3mplate"
+    },
+    "inDIDGenerator": {
+        "inDidExePath": "C:\\SAgrawal\\Drivers\\Memphis\\Tools\\DriverAutomationSuite\\1.0\\DriverIDEncrypter.exe",
+        "inDidBrandingFiles": [
+            "C:\\SAgrawal\\Drivers\\Memphis\\Tools\\DriverAutomationSuite\\1.0\\AWSCostExplorer\\ODBC\\Trunk\\Main\\Branding\\Simba\\Simba_AWSCostExplorer_branding.xml",
+            "C:\\SAgrawal\\Drivers\\Memphis\\Tools\\DriverAutomationSuite\\1.0\\AWSCostExplorer\\ODBC\\Trunk\\Main\\Branding\\Simba\\GatewayAdapter\\Simba_AWSCostExplorer_branding.xml"
+        ],
+        "inDidOutputFiles": [
+            "C:\\SAgrawal\\Drivers\\Memphis\\Tools\\DriverAutomationSuite\\1.0\\AWSCostExplorer\\ODBC\\Trunk\\Main\\Branding\\Simba\\AWSCostExplorerODBC.did",
+            "C:\\SAgrawal\\Drivers\\Memphis\\Tools\\DriverAutomationSuite\\1.0\\AWSCostExplorer\\ODBC\\Trunk\\Main\\Branding\\Simba\\GatewayAdapter\\AWSCostExplorerODBC.did"
+        ]
+    },
+    "inDriverBuilder": {
+        "inCompiler": "vs2015",
+        "inConfiguration": "debug64mt",
+        "inCoreMaintenanceVersion": "1.6",
+        "inPlatform": "w2012r2",
+        "inRegMSBuildToolsVersions": "SOFTWARE\\Microsoft\\MSBuild\\ToolsVersions\\14.0"
+    },
+    "inMdefGenerator": {
+        "inMode": "swagger",
+        "inSwaggerFilesOrURL": [
+            "C:\\Users\\FOO\\swagger_file1.json",
+            "C:\\Users\\FOO\\swagger_file2.json"
+        ],
+        "inPostman": {
+            "inApimaticEmail": "devpartner@simba.com",
+            "inApimaticPassword": "Sunshine4u",
+            "inPostmanCollectionFile": "C:\\Users\\FOO\\DigitalOcean_postman.json",
+            "inSwaggerOutputFileName": "converted_swagger.json"
+        }
+    },
+    "inVersionGenerator": {
+        "inDriverVersion": "1.0.0.1002",
+        "inAdapterVersion": "1.0.0.1002",
+        "inMinimumMagnitudeGatewayVersion": "<Minimum gateway version to be updated>",
+        "inVersionHeaderDirectory": "C:\\SAgrawal\\Drivers\\Memphis\\Tools\\DriverAutomationSuite\\1.0\\AWSCostExplorer\\ODBC\\Trunk\\Main\\MPAImpl\\Source\\Resources\\Version.h",
+        "inDriverBrandingDirectory": "C:\\SAgrawal\\Drivers\\Memphis\\Tools\\DriverAutomationSuite\\1.0\\AWSCostExplorer\\ODBC\\Trunk\\Main\\Branding\\Simba\\Simba_AWSCostExplorer_branding.xml",
+        "inAdapterBrandingDirectory": "C:\\SAgrawal\\Drivers\\Memphis\\Tools\\DriverAutomationSuite\\1.0\\AWSCostExplorer\\ODBC\\Trunk\\Main\\Branding\\Simba\\GatewayAdapter\\Simba_AWSCostExplorer_branding.xml",
+        "inAdapterManifestDirectory": [
+            "C:\\SAgrawal\\Drivers\\Memphis\\Tools\\DriverAutomationSuite\\1.0\\AWSCostExplorer\\ODBC\\Trunk\\Main\\GatewayAdapter\\Windows\\64\\AdapterManifest.xml"
+        ]
+    },
+    "inP4LabelGenerator": {
+        "inLabelType": "Adapter",
+        "inStableCoreLabel": "Memphis_Core_ODBC_1.6.26.1031",
+        "inReferencePerforceLabel": "AWSCostExplorer_GW_Adapter_1.0.0.1001",
+        "inLabelDescription": "Created by Shubham.\nCORE Label :- Memphis_Core_ODBC_1.6.23.1028\nSEN Label :- SimbaEngineSDK_10.1.19.1133",
+        "inDataSourceLabelFiles": [
+            "//Drivers/Memphis/DataSources/Facebook/Common/Trunk/Main/...",
+            "//Drivers/Memphis/DataSources/Facebook/ODBC/Trunk/Main/..."
+        ],
+        "inLabelView": [
+            "//Drivers/Memphis/Tools/...",
+            "//Drivers/DriverShared/DriverSupport/Maintenance/10.1/...",
+            "//Drivers/DriverShared/SENPluginToolkit/Maintenance/10.1/...",
+            "//Drivers/DriverShared/ViewSupport/Maintenance/10.1/...",
+            "//SimbaShared/Licensing/...",
+            "//SimbaShared/Step/...",
+            "//SimbaShared/Tools/...",
+            "//SimbaShared/ImportDependencies/Maintenance/1.0/...",
+            "//ThirdParty/Expat/2.2.9/...",
+            "//ThirdParty/icu/58.2.x/...",
+            "//ThirdParty/libcURL/7.66.0_ssl1.1.1_zlib-static1.2.11_threaded_resolver/...",
+            "//ThirdParty/openssl/1.1.1/...",
+            "//ThirdParty/poco/1.9.0/...",
+            "//ThirdParty/pugixml/1.7/...",
+            "//ThirdParty/rapidjson/20160518/...",
+            "//ThirdParty/zlib/1.2.11/...",
+            "//ThirdParty/gtest/1.7/...",
+            "//ThirdParty/liboauthcpp/1.0/...",
+            "//Drivers/Memphis/Core/Maintenance/1.6/..."
+        ]
+    },
+    "inDocGenerator": {
+        "inReleaseDate": "November 20, 2020",
+        "inProductVersionNumber": "1.0.0",
+        "inAdapterVersionNumber": "1.0.0",
+        "inLink": "https://www.simba.com/drivers/newdriver-odbc-jdbc/",
+        "inUserGuideFlareProjectPath": "D:\\perforce\\Documentation\\Gateway",
+        "inUserGuideFlareProjectFile": "Gateway Documentation.flprj",
+        "inReferenceGuideFlareProjectPath": "D:\\perforce\\Documentation\\Reference Memphis",
+        "inReferenceGuideFlareProjectFile": "Reference.flprj",
+        "inMadBuildPath": "C:\\Program Files\\MadCap Software\\MadCap Flare 16\\Flare.app",
+        "inMDefPath": "C:\\Desktop\\Shopify.mdef",
+        "inSchemaDocGeneratorPath": "D:\\perforce\\Drivers\\Memphis\\Tools\\SchemaDocGenerator",
+        "inOutputPath": "D:\\DocsOutput"
+    },
+    "inGwAdapterGenerator": {
+        "inNewAdapterName": "Zoom",
+        "inAdapterOutputDirectory":"C:\\Users\\shubhams\\Documents\\Automation\\GatewayAuto\\DriverAutomationSuite\\1.0\\AdapterPackage",
+        "inGWTemplateFiles":  "C:\\Users\\shubhams\\Documents\\Automation\\GatewayAuto\\DriverAutomationSuite\\1.0\\PluginT3mplate\\ODBC\\Trunk\\Main\\GatewayAdapter",
+        "inDriverDocFiles":  "C:\\Users\\shubhams\\Documents\\Automation\\GatewayAuto\\DriverAutomationSuite\\1.0\\PluginT3mplate\\ODBC\\Trunk\\Main\\Branding\\Simba\\Docs",
+        "inOS": [
+            "Windows",
+            "Linux",
+            "OSX"
+        ],
+        "inNoOfBits": [
+            "64"
+        ],
+        "inKeywords": [
+            "{DataSourceName}=Zoom",
+            "{DataSourceDisplayName}=Zoom",
+            "{HostEx}=zoom.us",
+            "{AdapterType}=Zoom",
+            "{ScopeDefault}=",
+            "{UUID}=001560E662DF495F813246CED4B3C44F",
+            "{Port}=1588",
+            "{ApplicationCode}=ZOOM"
+        ],
+        "inAdapterVersion": "1.6.12.1006",
+        "inCompiler": "vs2015",
+        "inConfiguration": "debug64mt",
+        "inCoreMaintenanceVersion": "1.6",
+        "inPlatform": "w2012r2",
+        "inRegMSBuildToolsVersions": "SOFTWARE\\Microsoft\\MSBuild\\ToolsVersions\\14.0"
+    },
+    "inBambooConfigs": {
+        "inProjectKey":"BULDMMEM",
+        "inDriverLabel":"AWSCostExplorer_GW_Adapter_1.0.0.1000",
+        "inCoreLabel":"Memphis_Core_ODBC_1.6.26.1031",
+        "inSENLabel":"SimbaEngineSDK_10.1.19.1133",
+        "inBuildConfigs":{
+            "Windows":{
+                "inCompiler":"",
+                "inPlatform":"",
+                "inConfiguration":""
+            },
+            "Linux":{
+                "inCompiler":"",
+                "inPlatform":"",
+                "inConfiguration":""
+            },
+            "OSX":{
+                "inCompiler":"xcode5_1",
+                "inPlatform":"osx10_9",
+                "inConfiguration":"universal"
+            }
+        },
+        "inBranchName": "AWSCostExplorer Trunk"
+    }
+}

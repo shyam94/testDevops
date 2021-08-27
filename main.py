@@ -183,7 +183,7 @@ class DrMemoryTask:
         for fn in zip.namelist():
             if fn.endswith("results.txt"):
                 file = zip.read(fn).decode("utf-8")
-                fileName = fn[fn.find("memoryReport/") + 13:fn.find("/DrMemory-Touchstone.exe")]
+                fileName = sys.argv[1] + "\\" + fn[fn.find("memoryReport/") + 13:fn.find("/DrMemory-Touchstone.exe")]
                 f = open(fileName, "w+")
                 found = 0
                 for line in file.split("\n"):

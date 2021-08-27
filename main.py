@@ -18,111 +18,114 @@ import getpass
 import base64
 import xml.etree.cElementTree as et
 import webbrowser
+from socket import *
+
+import zipfile
+import shutil
+import os, stat
+import urllib
+import time
+from email.mime.application import MIMEApplication
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.utils import COMMASPACE, formatdate
+import smtplib
+from os.path import basename
+import sys
 
 from atlassian import Bamboo
 
-class BambooBuildPlans:
+class DrMemoryTask:
 
-    def __init__(self, input_args: dict):
+    def __init__(self, username, password, email, input_args: dict):
         self.input_args = input_args
-        self.project = input_args['inBambooConfigs']['inProjectKey']
-        # self.Packageproject = input_args['inBambooConfigs']['inPackageProjectKey']
-        # self.FTproject = input_args['inBambooConfigs']['inFTProjectKey']
         self.driver_label = input_args['inBambooConfigs']['inDriverLabel']
         self.core_label = input_args['inBambooConfigs']['inCoreLabel']
         self.sen_label = input_args['inBambooConfigs']['inSENLabel']
         self.windows_build_configs = input_args['inBambooConfigs']['inBuildConfigs']['Windows']['inPlatform'] + " " + \
                                      input_args['inBambooConfigs']['inBuildConfigs']['Windows']['inCompiler'] + " " + \
                                      input_args['inBambooConfigs']['inBuildConfigs']['Windows']['inConfiguration']
-        self.linux_build_configs = input_args['inBambooConfigs']['inBuildConfigs']['Linux']['inPlatform'] + " " + \
-                                   input_args['inBambooConfigs']['inBuildConfigs']['Linux']['inCompiler'] + " " + \
-                                   input_args['inBambooConfigs']['inBuildConfigs']['Linux']['inConfiguration']
-        self.osx_build_configs = input_args['inBambooConfigs']['inBuildConfigs']['OSX']['inPlatform'] + " " + \
-                                 input_args['inBambooConfigs']['inBuildConfigs']['OSX']['inCompiler'] + " " + \
-                                 input_args['inBambooConfigs']['inBuildConfigs']['OSX']['inConfiguration']
         self.branch_name = input_args['inBambooConfigs']['inBranchName']
+        self.excludeCompile = input_args['ExcludeCompilation']
+        self.atlassian_user = username
+        self.atlassian_password = password
+        self.receiver_email = email
 
-    def build(self):
-        # Ask user to login with Bigsight credentials and trigger the build plan
-        atlassian_user = "shyamj"
-        atlassian_password = "Ganesh24$"
-
-        user_pass = atlassian_user + ':' + atlassian_password
+    def build(self, projectKey):
+        user_pass = self.atlassian_user + ':' + self.atlassian_password
         base_64_val = base64.b64encode(user_pass.encode()).decode()
         bamboo_url = os.environ.get("http://bergamot3.lakes.ad:8085", "http://bergamot3.lakes.ad:8085")
 
         # Creates the bamboo object with user credentials for sending http requests
-        bamboo = Bamboo(url=bamboo_url, username=atlassian_user, password=atlassian_password)
-        url = self.get_project_url(base_64_val)
+        bamboo = Bamboo(url=bamboo_url, username=self.atlassian_user, password=self.atlassian_password)
+        url = "http://bergamot3.lakes.ad:8085/rest/api/latest/project/" + projectKey
         if not url == None:
             if len(self.windows_build_configs) > 2:
-                branch_info = bamboo.get_branch_info(self.get_plan_key(url, base_64_val, self.windows_build_configs),
-                                                 self.branch_name)
+                #self.get_plan_key(url, base_64_val, self.windows_build_configs)
+                branch_info = bamboo.get_branch_info(
+                              "BULDOMEM-WIN2012R2VS000201332" if projectKey == "BULDOMEM" else "TSTFOMEM-WIN2012R26432M",
+                              self.branch_name)
                 branch_key = branch_info['key']
                 bamboo.execute_build(branch_key, **self.get_params())
                 print('Bamboo build is started for ' + self.branch_name.split(' ')[0] + ' ODBC in windows platform')
                 self.open_browser(branch_info['latestResult']['link']['href'])
-                return True
+                self.check_plan_status(branch_info['latestResult']['link']['href'].split("/")[-1],
+                                      base_64_val)
+                if projectKey == "TSTFOMEM":
+                    data = urllib.request.urlopen(branch_info['latestResult']['link']['href'].replace('rest/api/latest/result', 'browse')
+                         + "/artifact/JOB/Logs/build.txt")
+                    path = data.readlines()[1].strip().decode('utf-8')
+                    path = path.replace('oak', 'oak.simba.ad')
+                    self.get_logs(path)
 
-            if len(self.linux_build_configs) > 2:
-                branch_info = bamboo.get_branch_info(self.get_plan_key(url, base_64_val, self.linux_build_configs),
-                                                 self.branch_name)
-                branch_key = branch_info['key']
-                bamboo.execute_build(branch_key, **self.get_params())
-                print('Bamboo build is started for ' + self.branch_name.split(' ')[0] + ' adapter in linux platform')
-                self.open_browser(branch_info['latestResult']['link']['href'])
-                return True
-            if len(self.osx_build_configs) > 2:
-                branch_info = bamboo.get_branch_info(self.get_plan_key(url, base_64_val, self.osx_build_configs),
-                                                 self.branch_name)
-                branch_key = branch_info['key']
-                bamboo.execute_build(branch_key, **self.get_params())
-                print('Bamboo build is started for ' + self.branch_name.split(' ')[0] + ' adapter in osx platform')
-                self.open_browser(branch_info['latestResult']['link']['href'])
                 return True
         else:
             print(self.project + ' project not found. Please verify the project key.')
             return False
 
-    def get_plan_key(self, url, base_64_user_pass, build_configs):
-        url += '?expand=plans&max-result=100'
-        payload = ""
-        headers = {
-            'Authorization': "Basic " + base_64_user_pass
-        }
+    # def get_plan_key(self, url, base_64_user_pass, build_configs):
+    #     payload = ""
+    #     headers = {
+    #         'Authorization': "Basic " + base_64_user_pass
+    #     }
+    #     params = {
+    #         "expand": "plans",
+    #         "max-result": 25,
+    #         "start-index": 0
+    #     }
+    #     while True:
+    #         response = requests.request("GET", url,params=params,data=payload, headers=headers)
+    #         tree = et.fromstring(response.content)
+    #         for child in tree.iter('*'):
+    #             try:
+    #                 if child.attrib.get('shortName').__contains__(build_configs):
+    #                     return child.attrib.get('key')
+    #             except:
+    #                 continue
+    #         params["start-index"]+=25
 
-        response = requests.request("GET", url, data=payload, headers=headers)
-        tree = et.fromstring(response.content)
-
-        for child in tree.iter('*'):
-            try:
-                if child.attrib.get('shortName').__contains__(build_configs):
-                    return child.attrib.get('key')
-            except:
-                continue
-
-    def get_project_url(self, base_64_user_pass):
-        url = "http://bergamot3.lakes.ad:8085/rest/api/latest/project/" + self.project
-        if self.project != "":
-            return url
-        payload = ""
-        headers = {
-            'Authorization': "Basic " + base_64_user_pass
-        }
-
-        response = requests.request("GET", url, data=payload, headers=headers)
-        tree = et.fromstring(response.content)
-
-        found_proj = False
-        for child in tree.iter('*'):
-            if found_proj:
-                return child.attrib.get('href')
-            try:
-                if child.attrib.get('key').__contains__(self.project):
-                    found_proj = True
-                    key = child.attrib.get('key')
-            except:
-                continue
+    # def get_project_url(self, base_64_user_pass):
+    #     url = "http://bergamot3.lakes.ad:8085/rest/api/latest/project/" + self.project
+    #     if self.project != "":
+    #         return url
+    #     payload = ""
+    #     headers = {
+    #         'Authorization': "Basic " + base_64_user_pass
+    #     }
+    #
+    #     response = requests.request("GET", url, data=payload, headers=headers)
+    #     tree = et.fromstring(response.content)
+    #
+    #     found_proj = False
+    #     for child in tree.iter('*'):
+    #         if found_proj:
+    #             return child.attrib.get('href')
+    #         try:
+    #             if child.attrib.get('key').__contains__(self.project):
+    #                 found_proj = True
+    #                 key = child.attrib.get('key')
+    #         except:
+    #             continue
 
     def get_params(self):
         params = {
@@ -141,7 +144,6 @@ class BambooBuildPlans:
             "CODE_ANALYSIS": 0,
             "COMPILER": 'vs2013',
             "BUILD_SOURCE": 'w2012r2'
-
         }
         return params
 
@@ -151,33 +153,115 @@ class BambooBuildPlans:
         url = url.replace('rest/api/latest/result', 'browse')
         webbrowser.open(url, new=2)
 
+    def check_plan_status(self, build_key, base_64_user_pass):
+        url = "http://bergamot3.lakes.ad:8085/rest/api/latest/result/" + build_key
+        job_id = int(url[len(url) - 1]) + 1
+        url = url[0: len(url) - 1] + str(job_id)
+        payload = ""
+        headers = {
+            'Authorization': "Basic " + base_64_user_pass
+        }
+        if build_key.find("BULD") != -1:
+            print("Compile plan (with MEM) is running and in progress")
+        else:
+            print("Functional test plan (with DrMemory) is running and in progress")
+        status = ""
+        while True:
+            response = requests.request("GET", url, data=payload, headers=headers)
+            root = et.fromstring(response.content)
+            for buildState in root.iter('buildState'):
+                status = buildState.text
+            if status != "Unknown":
+                break
+            time.sleep(60)
+        print("Bamboo Plan Execution Finished with result: "+ status)
+
+    def get_logs(self,filePath):
+        remotezip = urllib.request.urlopen(r"file:"+filePath+r"\\log.zip")
+        zip = zipfile.ZipFile(remotezip)
+        files = []
+        for fn in zip.namelist():
+            if fn.endswith("results.txt"):
+                file = zip.read(fn).decode("utf-8")
+                fileName = fn[fn.find("memoryReport/") + 13:fn.find("/DrMemory-Touchstone.exe")]
+                f = open(fileName, "w+")
+                found = 0
+                for line in file.split("\n"):
+                    if "# 0 " in line and "\\drivers\\memphis" in line:
+                        errors = "\n" + prevLine
+                        found = 1
+                    if found == 1:
+                        if line != "\r":
+                            errors += line
+                            continue
+                        else:
+                            found = 0
+                            f.write(errors)
+                    prevLine = line
+                if(os.stat(f.name).st_size > 0):
+                    files.append(fileName)
+                f.close()
+
+        self.send_mail(files)
+
+    def send_mail(self,attachments):
+        SERVER = "smtp-mail.outlook.com"
+        FROM = "sjoshi@magnitude.com"
+        TO = [self.receiver_email]  # must be a list
+
+        # Prepare actual message
+        msg = MIMEMultipart()
+        msg['From'] = FROM
+        msg['To'] = COMMASPACE.join(TO)
+        msg['Date'] = formatdate(localtime=True)
+        msg['Subject'] = "DrMemory Report"
+
+        msg.attach(MIMEText("Hey!\r\n Here is your memory report from DrMemory.\r\n Thanks."))
+        # message = """From: %s\r\nTo: %s\r\nSubject: %s\r\n\
+        for file in attachments or []:
+            with open(file, "rb") as report:
+                part = MIMEApplication(
+                    report.read(),
+                    Name=basename(file)
+                )
+            # After the file is closed
+            part['Content-Disposition'] = 'attachment; filename="%s"' % basename(file)
+            msg.attach(part)
+
+        server = smtplib.SMTP(SERVER, 587)
+        server.connect(SERVER, 587)
+        server.ehlo()
+        server.starttls()
+        server.ehlo()
+        server.login("sjoshi@magsw.com", self.atlassian_password)
+        server.sendmail(FROM, TO, msg.as_string())
+        server.quit()
+
+        """ % (FROM, ", ".join(TO), SUBJECT, TEXT) """
+
+        # Send the mail
 
 def run_bamboo_adapter_build(input_args: dict):
     print("Building driver/adapter on bamboo...BEGIN")
-    bamboo_build = BambooBuildPlans(input_args)
-    # run_build_driver_as_server(input_args)
-    if bamboo_build.build():
-        print("Please go through the logs generated on bamboo for further reference.")
-    else:
-        print("Please check the input parameters and try again.")
-
+    bamboo_build = DrMemoryTask(sys.argv[2], sys.argv[3], sys.argv[4], input_args)
+    projectKeys = ["TSTFOMEM"]
+    if not bamboo_build.excludeCompile:
+        projectKeys.insert(0,"BULDOMEM")
+    for projectKey in projectKeys:
+        if bamboo_build.build(projectKey):
+            print("Please go through the logs generated on bamboo for further reference.")
+        else:
+            print("Please check the input parameters and try again.")
 
 def main():
-    input_json_file = 'C:\\agent\\_work\\r2\\a\\_DvssPavan_testDevops\\user_input.json'
+    input_json_file = sys.argv[1] + '\\user_input.json'
     if not os.path.exists(input_json_file):
         print("IMPORTANT: Please ensure to modify user_input.json as per your "
               "needs prior to running this.")
         input_json_file = input("Please enter the full path to the input json "
                                 "file (e.g., C:\\user_input.json): ")
-    print("In line 172")
     f = open(input_json_file)
-    print("In line 174")
     run_bamboo_adapter_build(load(f))
-    print("In line 176")
-    #print(plan_results(self.project, self.get_plan_key))
-    #data = urllib.request.urlopen("http://bergamot3.lakes.ad:8085/browse/TSTFOMEM-WIN2012R26432M104-21/artifact/JOB/Logs/build.txt")  # it's a file like object and works just like a file
-    #path = data.readlines()[1].strip().decode('utf-8')
-    #print(path.replace('oak','oak.simba.ad'))
 
 if __name__ == '__main__':
     main()

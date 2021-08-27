@@ -101,9 +101,9 @@ print(type( inputList))
 print(inputList) 
 print(type(inputList[0]))"""
 
-jira=JiraOperations(sys.argv[1],sys.argv[2])
-issue=jira.createConmapTask(sys.argv[3],sys.argv[4],sys.argv[5],platformArgs,customerArgs)
-print(issue)
+#jira=JiraOperations(sys.argv[1],sys.argv[2])
+#issue=jira.createConmapTask(sys.argv[3],sys.argv[4],sys.argv[5],platformArgs,customerArgs)
+print(sys.argv[8])
 
 """jira=JiraOperations("pcheemakurthi","Gnca9a059$")
 issue=jira.createConmapTask("amazon","New sub issue from jira-python","1.6.34",["windows",],["qlik"])

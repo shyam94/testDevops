@@ -12,8 +12,9 @@ pool:
 steps:
 
 - script: |
-    python -m pip install beautifulSoup4
+    python -m pip install jira
     
   displayName: 'Installing BeautifulSoup4'
 
-- script: python scrape.py
+- script: python test.py "" "" "" "" "" "" "" $(System.DefaultWorkingDirectory)
+  

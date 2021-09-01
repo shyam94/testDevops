@@ -69,12 +69,11 @@ class DrMemoryTask:
                 branch_key = branch_info['key']
                 bamboo.execute_build(branch_key, **self.get_params())
                 print('Bamboo build is started for ' + self.branch_name.split(' ')[0] + ' ODBC in windows platform')
-                self.open_browser(branch_info['latestResult']['link']['href'])
-                self.check_plan_status(branch_info['latestResult']['link']['href'].split("/")[-1],
-                                      base_64_val)
+                url = update_Job_Id(branch_info['latestResult']['link']['href'])
+                self.open_browser(url)
+                self.check_plan_status(url,base_64_val)
                 if projectKey == "TSTFOMEM":
-                    data = urllib.request.urlopen(branch_info['latestResult']['link']['href'].replace('rest/api/latest/result', 'browse')
-                         + "/artifact/JOB/Logs/build.txt")
+                    data = urllib.request.urlopen(url.replace('rest/api/latest/result', 'browse') + "/artifact/JOB/Logs/build.txt")
                     path = data.readlines()[1].strip().decode('utf-8')
                     path = path.replace('oak', 'oak.simba.ad')
                     self.get_logs(path)
@@ -83,50 +82,6 @@ class DrMemoryTask:
         else:
             print(self.project + ' project not found. Please verify the project key.')
             return False
-
-    # def get_plan_key(self, url, base_64_user_pass, build_configs):
-    #     payload = ""
-    #     headers = {
-    #         'Authorization': "Basic " + base_64_user_pass
-    #     }
-    #     params = {
-    #         "expand": "plans",
-    #         "max-result": 25,
-    #         "start-index": 0
-    #     }
-    #     while True:
-    #         response = requests.request("GET", url,params=params,data=payload, headers=headers)
-    #         tree = et.fromstring(response.content)
-    #         for child in tree.iter('*'):
-    #             try:
-    #                 if child.attrib.get('shortName').__contains__(build_configs):
-    #                     return child.attrib.get('key')
-    #             except:
-    #                 continue
-    #         params["start-index"]+=25
-
-    # def get_project_url(self, base_64_user_pass):
-    #     url = "http://bergamot3.lakes.ad:8085/rest/api/latest/project/" + self.project
-    #     if self.project != "":
-    #         return url
-    #     payload = ""
-    #     headers = {
-    #         'Authorization': "Basic " + base_64_user_pass
-    #     }
-    #
-    #     response = requests.request("GET", url, data=payload, headers=headers)
-    #     tree = et.fromstring(response.content)
-    #
-    #     found_proj = False
-    #     for child in tree.iter('*'):
-    #         if found_proj:
-    #             return child.attrib.get('href')
-    #         try:
-    #             if child.attrib.get('key').__contains__(self.project):
-    #                 found_proj = True
-    #                 key = child.attrib.get('key')
-    #         except:
-    #             continue
 
     def get_params(self):
         params = {
@@ -149,15 +104,10 @@ class DrMemoryTask:
         return params
 
     def open_browser(self, url: str):
-        job_id = url.split("-")[-1]
-        url = url[0: len(url) - len(job_id)] + str(int(job_id) + 1)
         url = url.replace('rest/api/latest/result', 'browse')
         webbrowser.open(url, new=2)
 
-    def check_plan_status(self, build_key, base_64_user_pass):
-        url = "http://bergamot3.lakes.ad:8085/rest/api/latest/result/" + build_key
-        job_id = url.split("-")[-1]
-        url = url[0: len(url) - len(job_id)] + str(int(job_id) + 1)
+    def check_plan_status(self, url, base_64_user_pass):
         payload = ""
         headers = {
             'Authorization': "Basic " + base_64_user_pass
@@ -244,6 +194,11 @@ class DrMemoryTask:
         """ % (FROM, ", ".join(TO), SUBJECT, TEXT) """
 
         # Send the mail
+
+def update_Job_Id(url):
+    job_id = url.split("-")[-1]
+    url = url[0: len(url) - len(job_id)] + str(int(job_id) + 1)
+    return url
 
 def run_bamboo_adapter_build(input_args: dict):
     print("Building driver/adapter on bamboo...BEGIN")

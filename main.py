@@ -112,7 +112,7 @@ class DrMemoryTask:
         headers = {
             'Authorization': "Basic " + base_64_user_pass
         }
-        if build_key.find("BULD") != -1:
+        if url.find("BULD") != -1:
             print("Compile plan (with MEM) is running and in progress")
         else:
             print("Functional test plan (with DrMemory) is running and in progress")
@@ -125,7 +125,7 @@ class DrMemoryTask:
             if status != "Unknown":
                 break
             time.sleep(60)
-        if status == "Failed" and build_key.find("BULD") != -1:
+        if status == "Failed" and url.find("BULD") != -1:
             print("Compile plan failed hence the script will stop")
             exit()
         print("Bamboo Plan Execution Finished with result: " + status)

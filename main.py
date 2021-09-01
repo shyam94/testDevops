@@ -37,7 +37,7 @@ from atlassian import Bamboo
 
 class DrMemoryTask:
 
-    def __init__(self, username, password, email, input_args: dict):
+    def __init__(self, username, password, email, outlook_password, input_args: dict):
         self.input_args = input_args
         self.driver_label = input_args['inBambooConfigs']['inDriverLabel']
         self.core_label = input_args['inBambooConfigs']['inCoreLabel']
@@ -50,6 +50,7 @@ class DrMemoryTask:
         self.atlassian_user = username
         self.atlassian_password = password
         self.receiver_email = email
+        self.outlook_password = outlook_password
 
     def build(self, projectKey):
         user_pass = self.atlassian_user + ':' + self.atlassian_password
@@ -148,15 +149,15 @@ class DrMemoryTask:
         return params
 
     def open_browser(self, url: str):
-        job_id = int(url[len(url) - 1]) + 1
-        url = url[0: len(url) - 1] + str(job_id)
+        job_id = url.split("-")[-1]
+        url = url[0: len(url) - len(job_id)] + str(int(job_id) + 1)
         url = url.replace('rest/api/latest/result', 'browse')
         webbrowser.open(url, new=2)
 
     def check_plan_status(self, build_key, base_64_user_pass):
         url = "http://bergamot3.lakes.ad:8085/rest/api/latest/result/" + build_key
-        job_id = int(url[len(url) - 1]) + 1
-        url = url[0: len(url) - 1] + str(job_id)
+        job_id = url.split("-")[-1]
+        url = url[0: len(url) - len(job_id)] + str(int(job_id) + 1)
         payload = ""
         headers = {
             'Authorization': "Basic " + base_64_user_pass
@@ -174,7 +175,10 @@ class DrMemoryTask:
             if status != "Unknown":
                 break
             time.sleep(60)
-        print("Bamboo Plan Execution Finished with result: "+ status)
+        if status == "Failed" and build_key.find("BULD") != -1:
+            print("Compile plan failed hence the script will stop")
+            exit()
+        print("Bamboo Plan Execution Finished with result: " + status)
 
     def get_logs(self,filePath):
         remotezip = urllib.request.urlopen(r"file:"+filePath+r"\\log.zip")
@@ -233,7 +237,7 @@ class DrMemoryTask:
         server.ehlo()
         server.starttls()
         server.ehlo()
-        server.login("sjoshi@magsw.com", self.atlassian_password)
+        server.login("sjoshi@magsw.com", self.outlook_password)
         server.sendmail(FROM, TO, msg.as_string())
         server.quit()
 
@@ -243,7 +247,7 @@ class DrMemoryTask:
 
 def run_bamboo_adapter_build(input_args: dict):
     print("Building driver/adapter on bamboo...BEGIN")
-    bamboo_build = DrMemoryTask(sys.argv[2], sys.argv[3], sys.argv[4], input_args)
+    bamboo_build = DrMemoryTask(sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], input_args)
     projectKeys = ["TSTFOMEM"]
     if not bamboo_build.excludeCompile:
         projectKeys.insert(0,"BULDOMEM")

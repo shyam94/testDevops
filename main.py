@@ -132,7 +132,8 @@ class DrMemoryTask:
         print("Bamboo Plan Execution Finished with result: " + status)
 
     def get_logs(self,filePath):
-        remotezip = urllib.request.urlopen(r"file:"+filePath+"\\log.zip")
+        #remotezip = urllib.request.urlopen(r"file:"+filePath+"\\log.zip")
+        remotezip = urllib.request.urlopen(r"file:\\oak.simba.ad\build_archives\archive\TSTFOMEM-WIN2012R26432M104\31\log.zip")
         zip = zipfile.ZipFile(remotezip)
         files = []
         for fn in zip.namelist():

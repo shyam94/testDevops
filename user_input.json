@@ -13,5 +13,5 @@
         },
         "inBranchName": "Marketo 1.6"
     },
-    "ExcludeCompilation": true
+    "ExcludeCompilation": false
 }

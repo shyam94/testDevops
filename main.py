@@ -23,7 +23,6 @@ from socket import *
 import zipfile
 import shutil
 import os, stat
-import urllib
 import time
 from email.mime.application import MIMEApplication
 from email.mime.multipart import MIMEMultipart
@@ -62,17 +61,17 @@ class DrMemoryTask:
         url = "http://bergamot3.lakes.ad:8085/rest/api/latest/project/" + projectKey
         if not url == None:
             if len(self.windows_build_configs) > 2:
-                #self.get_plan_key(url, base_64_val, self.windows_build_configs)
+                self.get_plan_key(url, base_64_val, self.windows_build_configs)
                 branch_info = bamboo.get_branch_info(
                               "BULDOMEM-WIN2012R2VS000201332" if projectKey == "BULDOMEM" else "TSTFOMEM-WIN2012R26432M",
                               self.branch_name)
                 branch_key = branch_info['key']
-                #bamboo.execute_build(branch_key, **self.get_params())
-                #print('Bamboo build is started for ' + self.branch_name.split(' ')[0] + ' ODBC in windows platform')
-                #url = update_Job_Id(branch_info['latestResult']['link']['href'])
-                url = branch_info['latestResult']['link']['href']
-                #self.open_browser(url)
-                #self.check_plan_status(url,base_64_val)
+                bamboo.execute_build(branch_key, **self.get_params())
+                print('Bamboo build is started for ' + self.branch_name.split(' ')[0] + ' ODBC in windows platform')
+                url = update_Job_Id(branch_info['latestResult']['link']['href'])
+                #url = branch_info['latestResult']['link']['href']
+                self.open_browser(url)
+                self.check_plan_status(url,base_64_val)
                 if projectKey == "TSTFOMEM":
                     data = urllib.request.urlopen(url.replace('rest/api/latest/result', 'browse') + "/artifact/JOB/Logs/build.txt")
                     path = data.readlines()[1].strip().decode('utf-8')
@@ -133,7 +132,12 @@ class DrMemoryTask:
 
     def get_logs(self,filePath):
         #remotezip = urllib.request.urlopen(r"file:"+filePath+"\\log.zip")
-        remotezip = urllib.request.urlopen(r"file:\\oaka\build_archives\archive\TSTFOMEM-WIN2012R26432M104\31\log.zip")
+        request1 = urllib.request.Request(r"file:"+filePath+"\\log.zip")
+        user_pass = self.atlassian_user + ':' + self.atlassian_password
+        base_64_val = base64.b64encode(user_pass.encode()).decode()
+        request1.add_header("Authorization", "Basic %s" % base_64_val)
+        remotezip = urllib.request.urlopen(request1)
+        #remotezip = urllib.request.urlopen(r"file:\\oaka\build_archives\archive\TSTFOMEM-WIN2012R26432M104\31\log.zip")
         zip = zipfile.ZipFile(remotezip)
         files = []
         for fn in zip.namelist():

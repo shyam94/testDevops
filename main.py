@@ -61,7 +61,7 @@ class DrMemoryTask:
         url = "http://bergamot3.lakes.ad:8085/rest/api/latest/project/" + projectKey
         if not url == None:
             if len(self.windows_build_configs) > 2:
-                self.get_plan_key(url, base_64_val, self.windows_build_configs)
+                #self.get_plan_key(url, base_64_val, self.windows_build_configs)
                 branch_info = bamboo.get_branch_info(
                               "BULDOMEM-WIN2012R2VS000201332" if projectKey == "BULDOMEM" else "TSTFOMEM-WIN2012R26432M",
                               self.branch_name)

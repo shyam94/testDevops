@@ -132,11 +132,30 @@ class DrMemoryTask:
 
     def get_logs(self,filePath):
         #remotezip = urllib.request.urlopen(r"file:"+filePath+"\\log.zip")
-        request1 = urllib.request.Request(r"file:"+filePath+"\\log.zip")
-        user_pass = self.atlassian_user + ':' + self.atlassian_password
-        base_64_val = base64.b64encode(user_pass.encode()).decode()
-        request1.add_header("Authorization", "Basic %s" % base_64_val)
-        remotezip = urllib.request.urlopen(request1)
+        # create a password manager
+        password_mgr = urllib.request.HTTPPasswordMgrWithDefaultRealm()
+
+        # Add the username and password.
+        # If we knew the realm, we could use it instead of None.
+        top_level_url = r"file:"+filePath+"\\log.zip"
+        password_mgr.add_password(None, top_level_url, "shyamj", "Ganesh24$")
+
+        handler = urllib.request.HTTPBasicAuthHandler(password_mgr)
+
+        # create "opener" (OpenerDirector instance)
+        opener = urllib.request.build_opener(handler)
+
+        # use the opener to fetch a URL
+        opener.open(top_level_url)
+
+        # Install the opener.
+        # Now all calls to urllib.request.urlopen use our opener.
+        urllib.request.install_opener(opener)
+        #request1 = urllib.request.Request(r"file:"+filePath+"\\log.zip")
+        #user_pass = self.atlassian_user + ':' + self.atlassian_password
+        #base_64_val = base64.b64encode(user_pass.encode()).decode()
+        #request1.add_header("Authorization", "Basic %s" % base_64_val)
+        remotezip = urllib.request.urlopen(r"file:"+filePath+"\\log.zip")
         
         #remotezip = urllib.request.urlopen(r"file:\\oaka\build_archives\archive\TSTFOMEM-WIN2012R26432M104\31\log.zip")
         zip = zipfile.ZipFile(remotezip)

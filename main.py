@@ -132,7 +132,7 @@ class DrMemoryTask:
         print("Bamboo Plan Execution Finished with result: " + status)
 
     def get_logs(self,filePath):
-        remotezip = self.shared_folder_path + filePath[filePath.find("archive\\") + 7:] + "\\log.zip"
+        remotezip = repr(self.shared_folder_path) + filePath[filePath.find("archive\\") + 7:] + "\\log.zip"
         os.chmod(remotezip,0o777)
         zip = zipfile.ZipFile(remotezip)
         files = []
@@ -204,7 +204,7 @@ def update_Job_Id(url):
 
 def run_bamboo_adapter_build(input_args: dict):
     print("Building driver/adapter on bamboo...BEGIN")
-    bamboo_build = DrMemoryTask(sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], r"\"" + sys.argv[6] + "\"", input_args)
+    bamboo_build = DrMemoryTask(sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], sys.argv[6], input_args)
     projectKeys = ["TSTFOMEM"]
     if not bamboo_build.excludeCompile:
         projectKeys.insert(0,"BULDOMEM")

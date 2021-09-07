@@ -160,6 +160,7 @@ class DrMemoryTask:
         
         #remotezip = urllib.request.urlopen(r"file:\\oaka\build_archives\archive\TSTFOMEM-WIN2012R26432M104\31\log.zip")
         remotezip = filePath+"\\log.zip"
+        os.chmod(remotezip,0o777)
         zip = zipfile.ZipFile(remotezip)
         files = []
         for fn in zip.namelist():

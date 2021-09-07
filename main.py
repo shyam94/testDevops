@@ -133,7 +133,7 @@ class DrMemoryTask:
     def get_logs(self,filePath):
         #remotezip = urllib.request.urlopen(r"file:"+filePath+"\\log.zip")
         request1 = urllib.request.Request(r"file:"+filePath+"\\log.zip")
-        user_pass = "simba\"+self.atlassian_user + ':' + self.atlassian_password
+        user_pass = "simba\\"+self.atlassian_user + ':' + self.atlassian_password
         base_64_val = base64.b64encode(user_pass.encode()).decode()
         request1.add_header("Authorization", "Basic %s" % base_64_val)
         remotezip = urllib.request.urlopen(request1)

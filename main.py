@@ -36,7 +36,7 @@ from atlassian import Bamboo
 
 class DrMemoryTask:
 
-    def __init__(self, username, password, email, outlook_password, input_args: dict):
+    def __init__(self, username, password, email, outlook_password, shared_folder_path, input_args: dict):
         self.input_args = input_args
         self.driver_label = input_args['inBambooConfigs']['inDriverLabel']
         self.core_label = input_args['inBambooConfigs']['inCoreLabel']
@@ -50,6 +50,7 @@ class DrMemoryTask:
         self.atlassian_password = password
         self.receiver_email = email
         self.outlook_password = outlook_password
+        self.shared_folder_path = shared_folder_path
 
     def build(self, projectKey):
         user_pass = self.atlassian_user + ':' + self.atlassian_password
@@ -131,38 +132,7 @@ class DrMemoryTask:
         print("Bamboo Plan Execution Finished with result: " + status)
 
     def get_logs(self,filePath):
-        #remotezip = urllib.request.urlopen(r"file:"+filePath+"\\log.zip")
-        # create a password manager
-        #password_mgr = urllib.request.HTTPPasswordMgrWithDefaultRealm()
-
-        # Add the username and password.
-        # If we knew the realm, we could use it instead of None.
-        #top_level_url = r"file:"+filePath+"\\log.zip"
-        #top_level_url = r"file:\\oak.simba.ad\build_archives\archive\TSTFOMEM-WIN2012R26432M104\32\log.zip"
-        #password_mgr.add_password(None, top_level_url, self.atlassian_user, self.atlassian_password)
-
-        #handler = urllib.request.HTTPBasicAuthHandler(password_mgr)
-
-        # create "opener" (OpenerDirector instance)
-        #opener = urllib.request.build_opener(handler)
-
-        # use the opener to fetch a URL
-        #opener.open(top_level_url)
-
-        # Install the opener.
-        # Now all calls to urllib.request.urlopen use our opener.
-        #urllib.request.install_opener(opener)
-        #request1 = urllib.request.Request(r"file:"+filePath+"\\log.zip")
-        #user_pass = self.atlassian_user + ':' + self.atlassian_password
-        #base_64_val = base64.b64encode(user_pass.encode()).decode()
-        #request1.add_header("Authorization", "Basic %s" % base_64_val)
-        #remotezip = urllib.request.urlopen(top_level_url)
-        
-        #remotezip = urllib.request.urlopen(r"file:\\oaka\build_archives\archive\TSTFOMEM-WIN2012R26432M104\31\log.zip")
-        #remotezip = filePath+"\\log.zip"
-        #os.chmod(remotezip,0o777)
-        #zip = zipfile.ZipFile(remotezip)
-        remotezip = r"\\vmware-host\Shared Folders\archive" + filePath[filePath.find("archive\\") + 7:] + "\\log.zip"
+        remotezip = r""+ self.shared_folder_path + filePath[filePath.find("archive\\") + 7:] + "\\log.zip"
         os.chmod(remotezip,0o777)
         zip = zipfile.ZipFile(remotezip)
         files = []
@@ -234,7 +204,7 @@ def update_Job_Id(url):
 
 def run_bamboo_adapter_build(input_args: dict):
     print("Building driver/adapter on bamboo...BEGIN")
-    bamboo_build = DrMemoryTask(sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], input_args)
+    bamboo_build = DrMemoryTask(sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], sys.argv[6], input_args)
     projectKeys = ["TSTFOMEM"]
     if not bamboo_build.excludeCompile:
         projectKeys.insert(0,"BULDOMEM")

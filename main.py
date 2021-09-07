@@ -138,7 +138,7 @@ class DrMemoryTask:
         # Add the username and password.
         # If we knew the realm, we could use it instead of None.
         #top_level_url = r"file:"+filePath+"\\log.zip"
-        top_level_url = r"\\oak.simba.ad\build_archives\archive\TSTFOMEM-WIN2012R26432M104\32\log.zip"
+        top_level_url = r"file:\\oak.simba.ad\build_archives\archive\TSTFOMEM-WIN2012R26432M104\32\log.zip"
         password_mgr.add_password(None, top_level_url, self.atlassian_user, self.atlassian_password)
 
         handler = urllib.request.HTTPBasicAuthHandler(password_mgr)

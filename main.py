@@ -66,12 +66,12 @@ class DrMemoryTask:
                               "BULDOMEM-WIN2012R2VS000201332" if projectKey == "BULDOMEM" else "TSTFOMEM-WIN2012R26432M",
                               self.branch_name)
                 branch_key = branch_info['key']
-                #bamboo.execute_build(branch_key, **self.get_params())
-                #print('Bamboo build is started for ' + self.branch_name.split(' ')[0] + ' ODBC in windows platform')
-                #url = update_Job_Id(branch_info['latestResult']['link']['href'])
-                url = branch_info['latestResult']['link']['href']
-                #self.open_browser(url)
-                #self.check_plan_status(url,base_64_val)
+                bamboo.execute_build(branch_key, **self.get_params())
+                print('Bamboo build is started for ' + self.branch_name.split(' ')[0] + ' ODBC in windows platform')
+                url = update_Job_Id(branch_info['latestResult']['link']['href'])
+                #url = branch_info['latestResult']['link']['href']
+                self.open_browser(url)
+                self.check_plan_status(url,base_64_val)
                 if projectKey == "TSTFOMEM":
                     data = urllib.request.urlopen(url.replace('rest/api/latest/result', 'browse') + "/artifact/JOB/Logs/build.txt")
                     path = data.readlines()[1].strip().decode('utf-8')

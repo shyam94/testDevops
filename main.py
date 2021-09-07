@@ -137,7 +137,8 @@ class DrMemoryTask:
 
         # Add the username and password.
         # If we knew the realm, we could use it instead of None.
-        top_level_url = r"file:"+filePath+"\\log.zip"
+        #top_level_url = r"file:"+filePath+"\\log.zip"
+        top_level_url = "\\oak.simba.ad\build_archives\archive\TSTFOMEM-WIN2012R26432M104\32\log.zip"
         password_mgr.add_password(None, top_level_url, self.atlassian_user, self.atlassian_password)
 
         handler = urllib.request.HTTPBasicAuthHandler(password_mgr)
@@ -155,7 +156,7 @@ class DrMemoryTask:
         #user_pass = self.atlassian_user + ':' + self.atlassian_password
         #base_64_val = base64.b64encode(user_pass.encode()).decode()
         #request1.add_header("Authorization", "Basic %s" % base_64_val)
-        remotezip = urllib.request.urlopen(r"file:"+filePath+"\\log.zip")
+        remotezip = urllib.request.urlopen(top_level_url)
         
         #remotezip = urllib.request.urlopen(r"file:\\oaka\build_archives\archive\TSTFOMEM-WIN2012R26432M104\31\log.zip")
         zip = zipfile.ZipFile(remotezip)

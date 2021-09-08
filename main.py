@@ -1,12 +1,11 @@
-# Memphis Bamboo Build Plans 1.0
-# Author: ShubhamS
-"""This module is responsible for triggering bamboo build plans for driver/adapter.
+# Memphis Bamboo Build Plans for Dr Memory 1.0
+# Author: ShyamJ
+"""This module is responsible for triggering bamboo build plans for running DrMemory for driver.
 
-This triggers the bamboo build plan.
+This triggers the bamboo build plan for DrMemory.
 
   Typical usage example:
-  $ python BambooBuildPlans.py
-  And follow the on-screen instructions.
+  $ python drmemory.py <CommandLineArgs>
 """
 import os
 from json import load
@@ -21,8 +20,7 @@ import webbrowser
 from socket import *
 
 import zipfile
-import shutil
-import os, stat
+import stat
 import time
 from email.mime.application import MIMEApplication
 from email.mime.multipart import MIMEMultipart

@@ -131,7 +131,7 @@ class DrMemoryTask:
 
     def get_logs(self,filePath):
         #remotezip = self.shared_folder_path + filePath[filePath.find("archive\\") + 7:] + "\\log.zip"
-        remotezip = filePath + r"\\log.zip"
+        remotezip = filePath + r"\log.zip"
         #os.chmod(remotezip,0o777)
         zip = zipfile.ZipFile(remotezip)
         files = []

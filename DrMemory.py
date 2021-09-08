@@ -140,9 +140,9 @@ class DrMemoryTask:
         print("Bamboo Plan Execution Finished with result: " + status)
 
     """Get and parse the logs"""
-    def get_logs(self, filepath):
+    def get_logs(self, filePath):
         # read path from Shared folder
-        remotezip = self.shared_folder_path + filePath[filepath.find("archive\\") + 7:] + "\\log.zip"
+        remotezip = self.shared_folder_path + filePath[filePath.find("archive\\") + 7:] + "\\log.zip"
 
         # open remote log.zip file
         os.chmod(remotezip, 0o777)

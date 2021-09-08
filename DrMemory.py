@@ -36,9 +36,6 @@ class DrMemoryTask:
         self.driver_label = input_args['inBambooConfigs']['inDriverLabel']
         self.core_label = input_args['inBambooConfigs']['inCoreLabel']
         self.sen_label = input_args['inBambooConfigs']['inSENLabel']
-        self.windows_build_configs = input_args['inBambooConfigs']['inBuildConfigs']['Windows']['inPlatform'] + " " + \
-                                     input_args['inBambooConfigs']['inBuildConfigs']['Windows']['inCompiler'] + " " + \
-                                     input_args['inBambooConfigs']['inBuildConfigs']['Windows']['inConfiguration']
         self.branch_name = input_args['inBambooConfigs']['inBranchName']
         self.excludeCompile = input_args['ExcludeCompilation']
         self.atlassian_user = username
@@ -58,7 +55,7 @@ class DrMemoryTask:
         bamboo = Bamboo(url=bamboo_url, username=self.atlassian_user, password=self.atlassian_password)
 
         url = "http://bergamot3.lakes.ad:8085/rest/api/latest/project/" + projectKey
-        if url is not None and len(self.windows_build_configs) > 2:
+        if url is not None:
             # get branch info for Compile/FT plan for win32 platform
             branch_info = bamboo.get_branch_info(
                           "BULDOMEM-WIN2012R2VS000201332" if projectKey == "BULDOMEM" else "TSTFOMEM-WIN2012R26432M",

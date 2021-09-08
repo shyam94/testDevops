@@ -64,16 +64,15 @@ class DrMemoryTask:
             branch_key = branch_info['key']
 
             # Trigger Bamboo build
-            #bamboo.execute_build(branch_key, **self.get_params())
-            #print('Bamboo build is started for ' + self.branch_name.split(' ')[0] + ' ODBC in windows platform')
+            bamboo.execute_build(branch_key, **self.get_params())
+            print('Bamboo build is started for ' + self.branch_name.split(' ')[0] + ' ODBC in windows platform')
 
             # Get url with Job ID of currently running plan
-            #url = update_job_id(branch_info['latestResult']['link']['href'])
-            url = branch_info['latestResult']['link']['href']
-            #self.open_browser(url)
+            url = update_job_id(branch_info['latestResult']['link']['href'])
+            self.open_browser(url)
 
             # Check and wait until the plan is finished
-            #self.check_plan_status(url, base_64_val)
+            self.check_plan_status(url, base_64_val)
 
             # Get and parse the logs for Functional Test
             if projectKey == "TSTFOMEM":

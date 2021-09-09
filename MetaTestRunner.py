@@ -1,6 +1,7 @@
 import re
 import os
 import subprocess
+import sys
 
 from Input import InputReader
 from RemoteConnection import RemoteConnection
@@ -182,4 +183,4 @@ def main(inUserName: str, inPassword: str, inputFileName: str):
 
 
 if __name__ == '__main__':
-    main(input(), getpass(), 'input.json')
+    main(sys.argv[1], sys.argv[2], sys.argv[3])

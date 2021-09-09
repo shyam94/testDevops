@@ -47,14 +47,14 @@ class Package(ABC):
             try:
                 if not os.path.exists(destination):
                     createDir(destination)
-                else:
-                    if not os.path.exists(filePath) or forceUpdate:
-                        copy(source, destination)
-                        if zipfile.is_zipfile(filePath):
-                            unpack_archive(filePath, destination)
-                        else:
-                            print('Error: Expected File Type mismatched. `Zip` required')
-                            return False
+                if not os.path.exists(filePath) or forceUpdate:
+                    copy(source, destination)
+                    if zipfile.is_zipfile(filePath):
+                        unpack_archive(filePath, destination)
+                    else:
+                        print('Error: Expected File Type mismatched. `Zip` required')
+                        return False
+                print("Download Success")
                 return True
             except Exception as error:
                 print(error)

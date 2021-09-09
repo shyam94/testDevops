@@ -22,7 +22,8 @@ class MetaTester:
         if not isNoneOrEmpty(inDSN) and inDriverBit in [32, 64]:
             if 'METATESTER_DIR' in os.environ:
                 METATESTER_DIR = os.path.abspath(os.getenv('METATESTER_DIR'))
-                if not os.path.exists(METATESTER_DIR):
+                #if not os.path.exists(METATESTER_DIR):
+                if True:
                     MetaTesterPath = os.path.join(METATESTER_DIR, f"MetaTester{inDriverBit}.exe")
                     if os.path.exists(MetaTesterPath):
                         MetaTesterLogFileName = f"{inDSN.replace(' ', '_')}_MetaTesterLogs.txt"

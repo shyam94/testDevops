@@ -146,8 +146,8 @@ class Plugin(Package):
                                                           0, winreg.REG_SZ, 'Installed')
 
                                 with winreg.OpenKey(odbcKey, 'ODBC.INI', 0, winreg.KEY_WRITE) as odbcIniKey:
-                                    with winreg.OpenKey(odbcIniKey, 'ODBC Data Sources', 0,
-                                                        winreg.KEY_WRITE) as odbcDSkey:
+                                    with winreg.CreateKeyEx(odbcIniKey, 'ODBC Data Sources', 0,
+                                                        winreg.KEY_ALL_ACCESS) as odbcDSkey:
                                         winreg.SetValueEx(odbcDSkey, f"{dataSourceName}",
                                                           0, winreg.REG_SZ, f"{dataSourceName} ODBC Driver")
 

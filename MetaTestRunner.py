@@ -42,6 +42,7 @@ class MetaTester:
                     try:
                         metatesterLogs = subprocess.check_output(command,
                                                                  timeout=TimeOutLevel.MEDIUM.value).decode()
+                        print("Metatester Logs Is : " + metatesterLogs)
                         if 'Done validation' in metatesterLogs:
                             return metatesterLogs
                         else:
@@ -126,6 +127,8 @@ class MetaTester:
             writeInFile(parsedLogs, inParsedLogsPath)
             return not hadFailure
         else:
+            print(inLogs)
+            print(inParsedLogsPath)
             print('Error: Invalid Parameter')
             return False
 
@@ -176,6 +179,7 @@ def main(inUserName: str, inPassword: str, inputFileName: str):
                 logsPath = os.path.join(pluginInfo.getLogsPath(), f"{pluginInfo.getPluginBrand()}_"
                                                                   f"{pluginInfo.getPackageName()}_"
                                                                   f"MetaTesterLogs.txt")
+                print(logsPath)
                 MetaTesterPath = os.path.join(inputFileName[0:inputFileName.rfind(os.sep)], "MetaTester")
                 if not os.path.exists(MetaTesterPath):
                     print("Bad Metatester path is " + MetaTesterPath)

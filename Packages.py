@@ -54,7 +54,6 @@ class Package(ABC):
                     else:
                         print('Error: Expected File Type mismatched. `Zip` required')
                         return False
-                print("Download Success")
                 return True
             except Exception as error:
                 print(error)
@@ -128,10 +127,10 @@ class Plugin(Package):
                     dataSourceName = self.getDataSourceName()
 
                     with winreg.ConnectRegistry(None, winreg.HKEY_LOCAL_MACHINE) as hkey:
-                        with winreg.OpenKey(hkey, 'Software', 0, winreg.KEY_READ) as parentKey:
+                        with winreg.OpenKey(hkey, 'Software', 0, winreg.KEY_WRITE) as parentKey:
                             if systemBit != driverBit:
-                                parentKey = winreg.OpenKey(parentKey, 'Wow6432Node', 0, winreg.KEY_READ)
-                            with winreg.OpenKey(parentKey, 'ODBC', 0, winreg.KEY_READ) as odbcKey:
+                                parentKey = winreg.OpenKey(parentKey, 'Wow6432Node', 0, winreg.KEY_WRITE)
+                            with winreg.OpenKey(parentKey, 'ODBC', 0, winreg.KEY_WRITE) as odbcKey:
                                 with winreg.OpenKey(odbcKey, 'ODBCINST.INI', 0, winreg.KEY_WRITE) as odbcInstIniKey:
                                     with winreg.CreateKeyEx(odbcInstIniKey, f"{dataSourceName} ODBC Driver",
                                                             0, winreg.KEY_ALL_ACCESS) as driverKey:
@@ -147,7 +146,7 @@ class Plugin(Package):
 
                                 with winreg.OpenKey(odbcKey, 'ODBC.INI', 0, winreg.KEY_WRITE) as odbcIniKey:
                                     with winreg.CreateKeyEx(odbcIniKey, 'ODBC Data Sources', 0,
-                                                        winreg.KEY_ALL_ACCESS) as odbcDSkey:
+                                                            winreg.KEY_WRITE) as odbcDSkey:
                                         winreg.SetValueEx(odbcDSkey, f"{dataSourceName}",
                                                           0, winreg.REG_SZ, f"{dataSourceName} ODBC Driver")
 

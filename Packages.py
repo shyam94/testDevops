@@ -103,7 +103,7 @@ class Plugin(Package):
     def getLogsPath(self):
         logsPath = os.path.join(self.getDestinationPath(), 'DriverLogs')
         if os.path.exists(self.getDestinationPath()):
-            if os.path.exists(logsPath) and not os.path.exists(logsPath):
+            if not os.path.exists(logsPath):
                 os.mkdir(logsPath)
             return logsPath
         else:

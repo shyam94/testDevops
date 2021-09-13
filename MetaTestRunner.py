@@ -36,9 +36,11 @@ class MetaTester:
                     return None
             if os.path.exists(METATESTER_DIR):
                 MetaTesterPath = os.path.join(METATESTER_DIR, f"MetaTester{inDriverBit}.exe")
+                print("MetaTesterPath is found at : " + MetaTesterPath)
                 if os.path.exists(MetaTesterPath):
                     MetaTesterLogFileName = f"{inDSN.replace(' ', '_')}_MetaTesterLogs.txt"
                     command = f"{MetaTesterPath} -d \"{inDSN}\" -o {MetaTesterLogFileName}"
+                    print("Command for starting Metatester is : " + command)
                     try:
                         metatesterLogs = subprocess.check_output(command,
                                                                  timeout=TimeOutLevel.MEDIUM.value).decode()
@@ -187,7 +189,8 @@ def main(inUserName: str, inPassword: str, inputFileName: str):
                 print("Correct Metatester path is " + str(MetaTesterPath))
                 metaTesterLogs = MetaTester.run(pluginInfo.getDataSourceName(), pluginInfo.getPackageBitCount(),
                                                 MetaTesterPath)
-                if metaTesterLogs is None:
+                print("Metatester logs generated are : "+metaTesterLogs)
+                if metaTesterLogs is None or len(metaTesterLogs) == 0:
                     summary['Plugins'][sourceFilePath]['MetaDataTest'] = 'Failed'
                     print(f"{sourceFilePath}: MetaTester failed to initiate")
                 else:

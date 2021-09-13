@@ -176,11 +176,11 @@ def main(inUserName: str, inPassword: str, inputFileName: str):
                 logsPath = os.path.join(pluginInfo.getLogsPath(), f"{pluginInfo.getPluginBrand()}_"
                                                                   f"{pluginInfo.getPackageName()}_"
                                                                   f"MetaTesterLogs.txt")
-                MetaTesterPath = os.path.abspath('MetaTester')
+                MetaTesterPath = os.path.join(inputFileName[0:inputFileName.rfind(os.sep)], "MetaTester")
                 if not os.path.exists(MetaTesterPath):
                     print("Bad Metatester path is " + MetaTesterPath)
                     MetaTesterPath = None
-                print("Correct Metatester path is " + MetaTesterPath)
+                print("Correct Metatester path is " + str(MetaTesterPath))
                 metaTesterLogs = MetaTester.run(pluginInfo.getDataSourceName(), pluginInfo.getPackageBitCount(),
                                                 MetaTesterPath)
                 if metaTesterLogs is None:

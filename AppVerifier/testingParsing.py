@@ -3,10 +3,10 @@ import urllib
 import requests
 import os, stat
 
-shared_folder_path=r"\\vmware-host\Shared Folders\Z\"
+shared_folder_path=r"\\vmware-host\Shared Folders\Z"
 #remotezip = urllib.request.urlopen(r"file:C:\Users\pcheemakurthi\Documents\Rough\log.zip")
 filePath = r"\\oak.simba.ad\build_archives\archive\TSTFOMEM-WIN0020166432M88\25"
-remotezip = shared_folder_path + filePath[filePath.find("archive\\"):] + "\\log.zip"
+remotezip = shared_folder_path + filePath[filePath.find("\\archive\\"):] + "\\log.zip"
 zip = zipfile.ZipFile(remotezip)
 files = []
 for fn in zip.namelist():

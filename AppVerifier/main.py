@@ -69,10 +69,10 @@ class AppVerifierTask:
                     self.branch_name)
                 print(branch_info)
                 branch_key = branch_info['key']
-                #bamboo.execute_build(branch_key, **self.get_params())
+                bamboo.execute_build(branch_key, **self.get_params())
                 print('Bamboo build is started for ' + self.branch_name.split(' ')[0] + ' ODBC in windows platform')
-                #self.open_browser(branch_info['latestResult']['link']['href'])
-                #self.check_plan_status(branch_info['latestResult']['link']['href'].split("/")[-1], base_64_val)
+                self.open_browser(branch_info['latestResult']['link']['href'])
+                self.check_plan_status(branch_info['latestResult']['link']['href'].split("/")[-1], base_64_val)
                 if projectKey == "TSTFOMEM":
                     data = urllib.request.urlopen(branch_info['latestResult']['link']['href'].replace('rest/api/latest/result', 'browse') + "/artifact/JOB/Logs/build.txt")
                     path = data.readlines()[1].strip().decode('utf-8')
@@ -238,7 +238,7 @@ class AppVerifierTask:
         msg['Date'] = formatdate(localtime=True)
         msg['Subject'] = "AppVerifier Report"
 
-        msg.attach(MIMEText("Hey!\r\n Here is your AppVerifier report.\r\n Thanks.\r\n Note:There are no errors if the logs are not attached. \r\n"))
+        msg.attach(MIMEText("Hey!\r\n Here is your AppVerifier report.\r\n Thanks.\r\n\n Note:There are no errors if the logs are not attached. \r\n\n"))
         # message = """From: %s\r\nTo: %s\r\nSubject: %s\r\n\
         for file in attachments or []:
             with open(file, "rb") as report:

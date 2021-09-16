@@ -185,8 +185,8 @@ class AppVerifierTask:
 
 
     def get_logs(self, filePath):
-        print(filePath)
-        filePath=r"\\oak.simba.ad\build_archives\archive\TSTFOMEM-WIN0020166432M88\25"
+        #print(filePath)
+        #filePath=r"\\oak.simba.ad\build_archives\archive\TSTFOMEM-WIN0020166432M88\25"
         remotezip = self.shared_folder_path + filePath[filePath.find("\\archive\\"):] + "\\log.zip"
         #remotezip = urllib.request.urlopen(r"file:" + filePath + r"\\log.zip")
         #remotezip = r"\\oak.simba.ad\build_archives\archive\TSTFOMEM-WIN0020166432M88\12\log.zip"
@@ -238,7 +238,7 @@ class AppVerifierTask:
         msg['Date'] = formatdate(localtime=True)
         msg['Subject'] = "AppVerifier Report"
 
-        msg.attach(MIMEText("Hey!\r\n Here is your AppVerifier report.\r\n Thanks.\r\n Note:There are no errors if the logs are not attached"))
+        msg.attach(MIMEText("Hey!\r\n Here is your AppVerifier report.\r\n Thanks.\r\n Note:There are no errors if the logs are not attached. \r\n"))
         # message = """From: %s\r\nTo: %s\r\nSubject: %s\r\n\
         for file in attachments or []:
             with open(file, "rb") as report:

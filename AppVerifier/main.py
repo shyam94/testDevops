@@ -69,10 +69,10 @@ class AppVerifierTask:
                     self.branch_name)
                 print(branch_info)
                 branch_key = branch_info['key']
-                bamboo.execute_build(branch_key, **self.get_params())
+                #bamboo.execute_build(branch_key, **self.get_params())
                 print('Bamboo build is started for ' + self.branch_name.split(' ')[0] + ' ODBC in windows platform')
-                self.open_browser(branch_info['latestResult']['link']['href'])
-                self.check_plan_status(branch_info['latestResult']['link']['href'].split("/")[-1], base_64_val)
+                #self.open_browser(branch_info['latestResult']['link']['href'])
+                #self.check_plan_status(branch_info['latestResult']['link']['href'].split("/")[-1], base_64_val)
                 if projectKey == "TSTFOMEM":
                     data = urllib.request.urlopen(branch_info['latestResult']['link']['href'].replace('rest/api/latest/result', 'browse') + "/artifact/JOB/Logs/build.txt")
                     path = data.readlines()[1].strip().decode('utf-8')
@@ -185,6 +185,7 @@ class AppVerifierTask:
 
 
     def get_logs(self, filePath):
+        filePath=r"\\oak.simba.ad\build_archives\archive\TSTFOMEM-WIN0020166432M88\25"
         remotezip = self.shared_folder_path + filePath[filePath.find("archive\\"):] + "\\log.zip"
         #remotezip = urllib.request.urlopen(r"file:" + filePath + r"\\log.zip")
         #remotezip = r"\\oak.simba.ad\build_archives\archive\TSTFOMEM-WIN0020166432M88\12\log.zip"

@@ -187,7 +187,7 @@ class AppVerifierTask:
     def get_logs(self, filePath):
         #print(filePath)
         #filePath=r"\\oak.simba.ad\build_archives\archive\TSTFOMEM-WIN0020166432M88\25"
-        remotezip = self.shared_folder_path + filePath[filePath.find("oak.simba.ad\\") + 12:] + "\\log.zip"
+        remotezip = self.shared_folder_path + filePath[filePath.find("\\archive\\"):] + "\\log.zip"
         #remotezip = urllib.request.urlopen(r"file:" + filePath + r"\\log.zip")
         #remotezip = r"\\oak.simba.ad\build_archives\archive\TSTFOMEM-WIN0020166432M88\12\log.zip"
         zip = zipfile.ZipFile(remotezip)

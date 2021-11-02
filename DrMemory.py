@@ -143,7 +143,7 @@ class DrMemoryTask:
     """Get and parse the logs"""
     def get_logs(self, filePath):
         # read path from Shared folder
-        remotezip = self.shared_folder_path + filePath[filePath.find("archive\\") + 7:] + "\\log.zip"
+        remotezip = self.shared_folder_path + filePath[filePath.find("oak.simba.ad\\") + 12:] + "\\log.zip"
 
         # open remote log.zip file
         os.chmod(remotezip, 0o777)

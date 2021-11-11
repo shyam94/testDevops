@@ -1,10 +1,10 @@
 {
     "inBambooConfigs": {
-        "inDriverLabel":"QuickBooks_ODBC_1.6.34.1022__CL792018",
+        "inDriverLabel":"AmazonS3_ODBC_1.6.34.1014",
         "inCoreLabel":"Memphis_Core_ODBC_1.6.34.1039",
         "inSENLabel":"SimbaEngineSDK_10.1.20.1180_Internal",
-        "inBranchName": "QuickBooks 1.6",
-        "inTestSuiteList": "QuickBooksReadOnly"
+        "inBranchName": "S3 1.6",
+        "inTestSuiteList": ""
     },
     "ExcludeCompilation": true
 }

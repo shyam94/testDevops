@@ -72,7 +72,7 @@ def main(inCWD: str ,inPluginName: str, inLabelName: str, inSENLabel: str, inCor
         'SENLBL': inSENLabel
     }
     print(inCWD)
-    with open(inCWD + '/input.json', 'r') as file:
+    with open(inCWD + '\input.json', 'r') as file:
         content = file.read()
     for var, val in context.items():
         content = content.replace('{' + var + '}', val)

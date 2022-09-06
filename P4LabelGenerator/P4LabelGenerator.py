@@ -29,6 +29,7 @@ class P4Label:
         """Creates the P4 Label"""
         try:
             if not self.exists():
+                print(self.mLabelName)
                 self.mP4.createLabel(self.mLabelName, self.mLabelDescription, self.mViews)
             else:
                 print(f'{self.mLabelName} exists. Further operation might be risky. Quitting here')
@@ -40,7 +41,8 @@ class P4Label:
         """Checks if the label already exists"""
         try:
             result = subprocess.check_output(f'p4.exe labels -E {self.mLabelName}').decode()
-            print(result)
+            print("Result is " + result)
+            print("In Exists" + self.mLabelName)
             return self.mLabelName in result
         except Exception as error:
             print(error)

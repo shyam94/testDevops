@@ -27,6 +27,7 @@ class P4Label:
 
     def create(self):
         """Creates the P4 Label"""
+        print("I am in Create")
         try:
             if not self.exists():
                 print(self.mLabelName)
@@ -38,6 +39,7 @@ class P4Label:
             print(error)
 
     def exists(self):
+        print("I am in Exists")
         """Checks if the label already exists"""
         try:
             result = subprocess.check_output(f'p4.exe labels -E {self.mLabelName}').decode()
@@ -49,6 +51,7 @@ class P4Label:
             return True
 
     def map(self):
+        print("I am in Map")
         """Maps files to label"""
         for path, revisions in self.mViewContext.items():
             for revision in revisions:
@@ -59,6 +62,7 @@ class P4Label:
                     print(error)
 
     def prepare(self):
+        print("I am in Prepare")
         """Wrapper function to create, map and lock the label"""
         self.create()
         self.map()
@@ -74,6 +78,7 @@ def main(inCWD: str ,inPluginName: str, inLabelName: str, inSENLabel: str, inCor
     print(inCWD)
     with open(inCWD + '\input.json', 'r') as file:
         content = file.read()
+    print("Input file read")
     for var, val in context.items():
         content = content.replace('{' + var + '}', val)
     data = json.loads(content)

@@ -63,12 +63,13 @@ class P4Label:
         self.mP4.lockLabel(self.mLabelName)
 
 
-def main(inPluginName: str, inLabelName: str, inSENLabel: str, inCoreLabel: str = ''):
+def main(inCWD: str ,inPluginName: str, inLabelName: str, inSENLabel: str, inCoreLabel: str = ''):
     context = {
         'DRV': inPluginName,
         'CORELBL': inCoreLabel,
         'SENLBL': inSENLabel
     }
+    print(inCWD)
     with open('input.json', 'r') as file:
         content = file.read()
     for var, val in context.items():
@@ -87,9 +88,9 @@ def main(inPluginName: str, inLabelName: str, inSENLabel: str, inCoreLabel: str 
 
 
 if __name__ == '__main__':
-    if len(sys.argv) == 4:
-        main(sys.argv[1], sys.argv[2], sys.argv[3])
-    elif len(sys.argv) == 5:
+    if len(sys.argv) == 5:
         main(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
+    elif len(sys.argv) == 6:
+        main(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4] , sys.argv[5])
     else:
         print('Invalid Input')

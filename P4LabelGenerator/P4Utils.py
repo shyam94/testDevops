@@ -16,6 +16,7 @@ class Perforce:
         try:
             with mP4V.connect():
                 info = mP4V.run('info')
+                print(info)
                 self.mP4Root = info[0]['serverRoot']
                 self.mP4Host = info[0]['clientHost']
                 self.mP4User = info[0]['userName']

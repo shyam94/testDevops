@@ -60,8 +60,7 @@ class P4Label:
         """Wrapper function to create, map and lock the label"""
         self.create()
         self.map()
-        if self.mProductName == 'Core':
-            self.mP4.lockLabel(self.mLabelName)
+        self.mP4.lockLabel(self.mLabelName)
 
 
 def main(inPluginName: str, inLabelName: str, inSENLabel: str, inCoreLabel: str = ''):

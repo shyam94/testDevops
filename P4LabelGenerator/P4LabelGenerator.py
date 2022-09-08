@@ -42,10 +42,10 @@ class P4Label:
         print("I am in Exists")
         """Checks if the label already exists"""
         try:
-            #result = subprocess.check_output(f'p4.exe labels -E {self.mLabelName}').decode()
-            result = subprocess.run(['p4.exe', 'labels', '-E', self.mLabelName], stdout=subprocess.PIPE).stdout.decode()
-            print("Result is " + result)
             print("In Exists" + self.mLabelName)
+            #result = subprocess.check_output(f'p4.exe labels -E {self.mLabelName}').decode()
+            result = subprocess.run(['p4.exe', 'labels', '-E', self.mLabelName], stdout=subprocess.PIPE , shell=True).stdout.decode()
+            print("Result is " + result)
             return self.mLabelName in result
         except Exception as error:
             print(error)

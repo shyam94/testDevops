@@ -223,7 +223,8 @@ class AppVerifierTask:
                     if (os.stat(f.name).st_size > 0):
                         files.append(fileName)
                     f.close()
-        self.send_mail(files)
+        print(files)            
+        #self.send_mail(files)
 
 
     def send_mail(self, attachments):

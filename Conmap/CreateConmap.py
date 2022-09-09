@@ -18,9 +18,30 @@ class JiraOperations:
     "retail":"13007"
     }
     parentIds={
-    "S3":"111478",
-    "Marketo" :"111471",
-    "Eloqua": "111467"
+    "S3": "111478",
+    "Marketo": "111471",
+    "Eloqua": "111467",
+    "Hubspot": "111468",
+    "Jira": "111469",
+    "Responsys": "111477",
+    "PayPal": "111475",
+    "Xero": "111483",
+    "Zoho": "111484",
+    "MWS": "111473",
+    "GoogleAnalytics": "110818",
+    "WooCommerce": "110911",
+    "Facebook": "110815",
+    "FreshBooks": "110816",
+    "OSvC": "111474",
+    "Shopify": "111481",
+    "Concur": "111466",
+    "Magento": "110825",
+    "ServiceNow": "111479",
+    "Square": "111482",
+    "SFMarketingCloud": "111480",
+    "QuickBooks": "111476",
+    "LinkedIn": "110824",
+    "GoogleAds": "237016"
     }
     def __init__(self,username,password):
         self.username=username

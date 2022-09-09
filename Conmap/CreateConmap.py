@@ -19,8 +19,8 @@ class JiraOperations:
     }
     parentIds={
     "S3":"111478",
-    "marketo" :"111471".
-    "eloqua": "111467"
+    "Marketo" :"111471".
+    "Eloqua": "111467"
     }
     def __init__(self,username,password):
         self.username=username

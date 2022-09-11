@@ -39,7 +39,7 @@ class JiraOperations:
         jira=JIRA(options=self.jiraOptions,basic_auth=(self.username,self.password))
         issue_values={'project':{'id': self.projectId}, 'summary': drivername + versionNumber + 'ODBC' + customer + 'Release','issuetype': {'id' : '7' }}
         parentIssue=jira.create_issue(fields=issue_values)
-        print(issue)
+        print(parentIssue)
         for eachSummary in self.summary:
             issue_values={'project':{'id': self.projectId}, 'summary':eachSummary,'issuetype': {'id' : '5' },'parent': {'id': parentIssue.id }}
             issue=jira.create_issue(fields=issue_values)

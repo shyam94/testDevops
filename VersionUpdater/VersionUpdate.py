@@ -64,7 +64,7 @@ class VersionUpdator:
             os.chmod(brandingFile, stat.FILE_ATTRIBUTE_NORMAL)
             os.chmod(didPath, stat.FILE_ATTRIBUTE_NORMAL)
             self.updateVersion(brandingFile)
-            subprocess.call(f'{VersionUpdator.DIDENCRYPTERPATH} {brandingFile} {didPath}')
+            subprocess.call(f'{VersionUpdator.DIDENCRYPTERPATH} {brandingFile} {didPath}', shell=True)
             self.mP4V.checkout(newCL, brandingFile, didPath)
         # self.mP4V.submit(newCL)
 

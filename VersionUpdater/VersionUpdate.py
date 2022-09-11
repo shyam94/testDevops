@@ -12,9 +12,9 @@ class VersionUpdator:
     """
 
     # Constants
-    DIDENCRYPTERPATH = os.path.abspath(os.path.join(os.curdir, 'DriverIDEncrypter.exe'))
+    #DIDENCRYPTERPATH = os.path.abspath(os.path.join(os.curdir, 'DriverIDEncrypter.exe'))
 
-    def __init__(self, inBrandingDirPath: str, inNewVersion: str, inProductName: str = 'Core'):
+    def __init__(self, inCWD: str, inBrandingDirPath: str, inNewVersion: str, inProductName: str = 'Core'):
         """
         The constructor
         :param inBrandingDirPath: Directory path to `Branding`
@@ -25,6 +25,8 @@ class VersionUpdator:
         self.mProductName = inProductName
         self.mP4V = Perforce()
         self.mBrandingDirPath = os.path.abspath(self.mP4V.mP4ClientRoot + inBrandingDirPath)
+        self.mCWD = inCWD
+        self.DIDENCRYPTERPATH = os.path.abspath(os.path.join(inCWD, 'DriverIDEncrypter.exe'))
 
     def getBrandingFileConfig(self) -> dict:
         """Returns Dictionary of <Path-to-Branding.xml>:<DIDName> from each branding"""
@@ -64,18 +66,18 @@ class VersionUpdator:
             os.chmod(brandingFile, stat.FILE_ATTRIBUTE_NORMAL)
             os.chmod(didPath, stat.FILE_ATTRIBUTE_NORMAL)
             self.updateVersion(brandingFile)
-            subprocess.call(f'{VersionUpdator.DIDENCRYPTERPATH} {brandingFile} {didPath}', shell=True)
+            subprocess.call(f'{self.DIDENCRYPTERPATH} {brandingFile} {didPath}' , shell = True)
             self.mP4V.checkout(newCL, brandingFile, didPath)
         # self.mP4V.submit(newCL)
 
 
-def main(inNewVersion: str, inProductName: str):
+def main( inCWD: str,inNewVersion: str, inProductName: str):
     if inProductName == 'Core':
         brandingDir = f'//Drivers/Memphis/Core/Maintenance/1.6/ODBC/Branding/'
     else:
         brandingDir = f'//Drivers/Memphis/DataSources/{inProductName}/ODBC/Maintenance/1.6/Branding/'
-    VersionUpdator(brandingDir, inNewVersion, inProductName).run()
+    VersionUpdator(inCWD, brandingDir, inNewVersion, inProductName).run()
 
 
 if __name__ == '__main__':
-    main(sys.argv[1], sys.argv[2])
+    main(sys.argv[1],sys.argv[2], sys.argv[3])

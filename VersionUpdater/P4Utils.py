@@ -20,6 +20,7 @@ class Perforce:
                 self.mP4Host = info[0]['clientHost']
                 self.mP4User = info[0]['userName']
                 self.mP4Client = info[0]['clientName']
+                self.mP4ClientRoot = info[0]['clientRoot']
                 mP4V.exception_level = 1
                 self.mP4 = mP4V
                 print("Connected to perforce")
